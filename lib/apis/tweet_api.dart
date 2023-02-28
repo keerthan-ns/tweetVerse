@@ -19,6 +19,8 @@ abstract class ITweetAPI {
   FutureEither<model.Document> shareTweet(Tweet tweet);
   Future<List<model.Document>> getTweets();
   Stream<RealtimeMessage> getLatestTweet();
+  FutureEither<model.Document> likeTweet(Tweet tweet);
+  FutureEither<model.Document> updateReshareCount(Tweet tweet);
 }
 
 class TweetAPI implements ITweetAPI {
@@ -52,8 +54,12 @@ class TweetAPI implements ITweetAPI {
   @override
   Future<List<model.Document>> getTweets() async {
     final documents = await _db.listDocuments(
-        databaseId: AppwriteConstants.databaseId,
-        collectionId: AppwriteConstants.tweetsCollection);
+      databaseId: AppwriteConstants.databaseId,
+      collectionId: AppwriteConstants.tweetsCollection,
+      queries: [
+        Query.orderDesc('tweetedAt'),
+      ],
+    );
 
     return documents.documents;
   }
@@ -63,5 +69,53 @@ class TweetAPI implements ITweetAPI {
     return _realtime.subscribe([
       'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.tweetsCollection}.documents'
     ]).stream;
+  }
+  
+  @override
+  FutureEither<model.Document> likeTweet(Tweet tweet) async{
+    try {
+      final document = await _db.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.tweetsCollection,
+        documentId: tweet.id,
+        data: {
+          'likes':tweet.likes,
+        },
+      );
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some unexpected error occurred',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
+  }
+  
+  @override
+  FutureEither<model.Document> updateReshareCount(Tweet tweet) async {
+    try {
+      final document = await _db.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.tweetsCollection,
+        documentId: tweet.id,
+        data: {
+          'reshareCount':tweet.reshareCount,
+        },
+      );
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(
+          e.message ?? 'Some unexpected error occurred',
+          st,
+        ),
+      );
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
   }
 }
