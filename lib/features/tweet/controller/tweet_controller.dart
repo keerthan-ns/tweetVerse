@@ -76,6 +76,7 @@ class TweetController extends StateNotifier<bool> {
       tweet = tweet.copyWith(
         id: ID.unique(),
         reshareCount: 0,
+        tweetedAt: DateTime.now(),
       );
       final res2 = await _tweetAPI.shareTweet(tweet);
       res2.fold((l) => showSnackBar(context, l.message), (r) => showSnackBar(context, 'Retweeted sucessfully!'));
