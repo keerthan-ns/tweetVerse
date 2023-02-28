@@ -116,6 +116,7 @@ class TweetReplyScreen extends ConsumerWidget {
         },
         decoration: const InputDecoration(
           hintText: 'Tweet your reply',
+          contentPadding: EdgeInsets.only(left: 20,right: 20),
         ),
       ),
     );

@@ -103,6 +103,44 @@ class TweetCard extends ConsumerWidget {
                                   ],
                                 ),
                                 // replied to
+                                if (tweet.repliedTo.isNotEmpty)
+                                  ref
+                                      .watch(
+                                          getTweetByIdProvider(tweet.repliedTo))
+                                      .when(
+                                        data: (repliedToTweet) {
+                                          final replyingToUser = ref
+                                              .watch(
+                                                userDetailsProvider(
+                                                  repliedToTweet.uid,
+                                                ),
+                                              )
+                                              .value;
+                                          return RichText(
+                                            text: TextSpan(
+                                              text: 'Replying to',
+                                              style: const TextStyle(
+                                                color: Pallete.greyColor,
+                                                fontSize: 16,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      ' @${replyingToUser?.name}',
+                                                  style: const TextStyle(
+                                                    color: Pallete.blueColor,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        error: (error, st) => ErrorText(
+                                          error: error.toString(),
+                                        ),
+                                        loading: () => const SizedBox(),
+                                      ),
                                 HashtagText(text: tweet.text),
                                 if (tweet.tweetType == TweetType.image)
                                   CarouselImage(imageLinks: tweet.imageLinks),
