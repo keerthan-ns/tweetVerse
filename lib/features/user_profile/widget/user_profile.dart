@@ -78,6 +78,7 @@ class UserProfile extends ConsumerWidget {
                               ),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 25),
+                            backgroundColor: Pallete.orangeColor,
                           ),
                           child: Text(
                             currentUser.uid == user.uid
