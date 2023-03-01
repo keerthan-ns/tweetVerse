@@ -8,6 +8,7 @@ import 'package:tweetverse/features/auth/controller/auth_controller.dart';
 import 'package:tweetverse/features/tweet/widgets/tweet_card.dart';
 import 'package:tweetverse/features/user_profile/controller/user_profile_controller.dart';
 import 'package:tweetverse/features/user_profile/view/edit_profile_view.dart';
+// import 'package:tweetverse/features/user_profile/view/edit_profile_view.dart';
 import 'package:tweetverse/features/user_profile/widget/follow_count.dart';
 import 'package:tweetverse/models/user_model.dart';
 import 'package:tweetverse/theme/pallete.dart';
@@ -56,18 +57,18 @@ class UserProfile extends ConsumerWidget {
                         margin: const EdgeInsets.all(20),
                         child: OutlinedButton(
                           onPressed: () {
-                            // if (currentUser.uid == user.uid) {
-                            //   // edit profile
-                            //   Navigator.push(context, EditProfileView.route());
-                            // } else {
-                            //   ref
-                            //       .read(userProfileControllerProvider.notifier)
-                            //       .followUser(
-                            //         user: user,
-                            //         context: context,
-                            //         currentUser: currentUser,
-                            //       );
-                            // }
+                            if (currentUser.uid == user.uid) {
+                              // edit profile
+                              Navigator.push(context, EditProfileView.route());
+                            } else {
+                              ref
+                                  .read(userProfileControllerProvider.notifier)
+                                  .followUser(
+                                    user: user,
+                                    context: context,
+                                    currentUser: currentUser,
+                                  );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -151,23 +152,23 @@ class UserProfile extends ConsumerWidget {
                 ),
               ];
             },
-            // body: ref.watch(getUserTweetsProvider(user.uid)).when(
-            //       data: (tweets) {
-            //         // can make it realtime by copying code
-            //         // from twitter_reply_view
-            //         return ListView.builder(
-            //           itemCount: tweets.length,
-            //           itemBuilder: (BuildContext context, int index) {
-            //             final tweet = tweets[index];
-            //             return TweetCard(tweet: tweet);
-            //           },
-            //         );
-            //       },
-            //       error: (error, st) => ErrorText(
-            //         error: error.toString(),
-            //       ),
-            //       loading: () => const Loader(),
-            //     ),
+            body: ref.watch(getUserTweetsProvider(user.uid)).when(
+                  data: (tweets) {
+                    // can make it realtime by copying code
+                    // from twitter_reply_view
+                    return ListView.builder(
+                      itemCount: tweets.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final tweet = tweets[index];
+                        return TweetCard(tweet: tweet);
+                      },
+                    );
+                  },
+                  error: (error, st) => ErrorText(
+                    error: error.toString(),
+                  ),
+                  loading: () => const Loader(),
+                ),
           );
   }
 }

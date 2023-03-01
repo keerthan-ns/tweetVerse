@@ -15,6 +15,7 @@ import 'package:tweetverse/features/tweet/views/tweet_reply_view.dart';
 import 'package:tweetverse/features/tweet/widgets/carousel_image.dart';
 import 'package:tweetverse/features/tweet/widgets/hashtag_text.dart';
 import 'package:tweetverse/features/tweet/widgets/tweet_icon_buttons.dart';
+import 'package:tweetverse/features/user_profile/view/user_profile_view.dart';
 import 'package:tweetverse/models/tweet_model.dart';
 import 'package:tweetverse/theme/pallete.dart';
 
@@ -47,9 +48,17 @@ class TweetCard extends ConsumerWidget {
                         children: [
                           Container(
                             margin: const EdgeInsets.all(10),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(user.profilePic),
-                              radius: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  UserProfileView.route(user),
+                                );
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(user.profilePic),
+                                radius: 25,
+                              ),
                             ),
                           ),
                           Expanded(
