@@ -99,13 +99,13 @@ class AuthController extends StateNotifier<bool> {
     return updateUser;
   }
 
-  // void logout(BuildContext context) async {
-  //   final res = await _authAPI.logout();
-  //   res.fold((l) => null, (r) {
-  //     Navigator.pushAndRemoveUntil(
-  //       context, 
-  //       SignupView.route(), (route) => false
-  //     );
-  //   });
-  // }
+  void logout(BuildContext context) async {
+    final res = await _authAPI.logout();
+    res.fold((l) => null, (r) {
+      Navigator.pushAndRemoveUntil(
+        context, 
+        SignupView.route(), (route) => false
+      );
+    });
+  }
 }
