@@ -5,6 +5,7 @@ import 'package:tweetverse/apis/auth_api.dart';
 import 'package:tweetverse/apis/user_api.dart';
 import 'package:tweetverse/core/utils.dart';
 import 'package:tweetverse/features/auth/view/login_view.dart';
+import 'package:tweetverse/features/auth/view/signup_view.dart';
 import 'package:tweetverse/features/home/view/home_view.dart';
 import 'package:tweetverse/models/user_model.dart';
 
@@ -59,7 +60,8 @@ class AuthController extends StateNotifier<bool> {
           name: getNameFromEmail(email),
           followers: const [],
           following: const [],
-          profilePic: 'https://i.postimg.cc/rsy2HmNZ/user.png',//default user image
+          profilePic:
+              'https://i.postimg.cc/rsy2HmNZ/user.png', //default user image
           bannerPic: '',
           uid: r.$id,
           bio: '',
@@ -96,4 +98,14 @@ class AuthController extends StateNotifier<bool> {
 
     return updateUser;
   }
+
+  // void logout(BuildContext context) async {
+  //   final res = await _authAPI.logout();
+  //   res.fold((l) => null, (r) {
+  //     Navigator.pushAndRemoveUntil(
+  //       context, 
+  //       SignupView.route(), (route) => false
+  //     );
+  //   });
+  // }
 }

@@ -24,6 +24,7 @@ abstract class ITweetAPI {
   Future<List<model.Document>> getRepliesToTweet(Tweet tweet);
   Future<model.Document> getTweetById(String id);
   Future<List<model.Document>> getUserTweets(String uid);
+  Future<List<model.Document>> getTweetsByHashtag(String hashtag);
 }
 
 class TweetAPI implements ITweetAPI {
@@ -150,6 +151,19 @@ class TweetAPI implements ITweetAPI {
       collectionId: AppwriteConstants.tweetsCollection,
       queries: [
         Query.equal('uid',uid),
+      ],
+    );
+
+    return documents.documents;
+  }
+  
+  @override
+  Future<List<model.Document>> getTweetsByHashtag(String hashtag) async {
+    final documents = await _db.listDocuments(
+      databaseId: AppwriteConstants.databaseId,
+      collectionId: AppwriteConstants.tweetsCollection,
+      queries: [
+        Query.search('hashtags',hashtag),
       ],
     );
 

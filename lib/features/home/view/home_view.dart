@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tweetverse/constants/constants.dart';
+import 'package:tweetverse/features/home/widgets/side_drawer.dart';
 import 'package:tweetverse/features/tweet/views/create_tweet_view.dart';
 import 'package:tweetverse/theme/pallete.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,6 +47,7 @@ class _HomeViewState extends State<HomeView> {
           size: 28,
         ),
       ),
+      drawer: const SideDrawer(),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _page,
         onTap: onPageChange,
