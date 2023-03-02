@@ -76,7 +76,7 @@ class UserAPI implements IUserAPI {
     return documents.documents;
   }
 
-  // @override
+  @override
   FutureEitherVoid updateUserData(UserModel userModel) async {
     try {
       await _db.updateDocument(

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tweetverse/apis/notification_api.dart';
 import 'package:tweetverse/apis/storage_api.dart';
 import 'package:tweetverse/apis/tweet_api.dart';
 import 'package:tweetverse/core/enums/notification_type_enum.dart';
