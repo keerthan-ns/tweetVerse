@@ -5,6 +5,7 @@ import 'package:tweetverse/constants/appwrite_constants.dart';
 import 'package:tweetverse/features/tweet/controller/tweet_controller.dart';
 import 'package:tweetverse/features/tweet/widgets/tweet_card.dart';
 import 'package:tweetverse/models/tweet_model.dart';
+import 'package:tweetverse/theme/pallete.dart';
 
 class TweetReplyScreen extends ConsumerWidget {
   static route(Tweet tweet) => MaterialPageRoute(
@@ -103,19 +104,28 @@ class TweetReplyScreen extends ConsumerWidget {
               ),
         ],
       ),
-      bottomNavigationBar: TextField(
-        onSubmitted: (value) {
-          ref.read(tweetControllerProvider.notifier).shareTweet(
-            images: [],
-            text: value,
-            context: context,
-            repliedTo: tweet.id,
-            repliedToUserId: tweet.uid,
-          );
-        },
-        decoration: const InputDecoration(
-          hintText: 'Tweet your reply',
-          contentPadding: EdgeInsets.only(left: 20,right: 20),
+      bottomNavigationBar: Padding(
+        padding: MediaQuery.of(context).viewInsets,//this is added to make the tweet reply field float on top of keyboard
+        child: TextField(
+          onSubmitted: (value) {
+            ref.read(tweetControllerProvider.notifier).shareTweet(
+              images: [],
+              text: value,
+              context: context,
+              repliedTo: tweet.id,
+              repliedToUserId: tweet.uid,
+            );
+          },
+          decoration:  InputDecoration(
+            hintText: 'Tweet your reply',
+            contentPadding: const EdgeInsets.only(left: 20,right: 20),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: const BorderSide(
+                color: Pallete.greyColor,
+              ),
+            ),
+          ),
         ),
       ),
     );
