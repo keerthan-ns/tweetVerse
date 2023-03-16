@@ -183,16 +183,17 @@ class TweetCard extends ConsumerWidget {
                                             .toString(),
                                         onTap: () {},
                                       ),
-                                      TweetIconButton(
-                                        pathName: AssetsConstants.commentIcon,
-                                        text: (tweet.commentIds.length).toString(),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            TweetReplyScreen.route(tweet),
-                                          );
-                                        },
-                                      ),
+                                      if(tweet.repliedTo.isEmpty)
+                                        TweetIconButton(
+                                          pathName: AssetsConstants.commentIcon,
+                                          text: (tweet.commentIds.length).toString(),
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              TweetReplyScreen.route(tweet),
+                                            );
+                                          },
+                                        ),
                                       TweetIconButton(
                                         pathName: AssetsConstants.retweetIcon,
                                         text: (tweet.reshareCount).toString(),
