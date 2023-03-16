@@ -1,6 +1,6 @@
 # tweetverse
 
-A new Flutter project.
+Rukho zara.....Project Work-In-Progress !!
 
 ## Getting Started
 
