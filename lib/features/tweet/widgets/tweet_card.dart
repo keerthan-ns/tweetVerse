@@ -97,7 +97,7 @@ class TweetCard extends ConsumerWidget {
                                         user.name,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 19,
+                                          fontSize: 18,
                                         ),
                                       ),
                                     ),
@@ -113,7 +113,7 @@ class TweetCard extends ConsumerWidget {
                                       )} ',
                                       style: const TextStyle(
                                         color: Pallete.greyColor,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
@@ -136,7 +136,7 @@ class TweetCard extends ConsumerWidget {
                                               text: 'Replying to',
                                               style: const TextStyle(
                                                 color: Pallete.greyColor,
-                                                fontSize: 16,
+                                                fontSize: 15,
                                               ),
                                               children: [
                                                 TextSpan(
@@ -144,7 +144,7 @@ class TweetCard extends ConsumerWidget {
                                                       ' @${replyingToUser?.name}',
                                                   style: const TextStyle(
                                                     color: Pallete.blueColor,
-                                                    fontSize: 16,
+                                                    fontSize: 15,
                                                   ),
                                                 ),
                                               ],
@@ -168,7 +168,9 @@ class TweetCard extends ConsumerWidget {
                                           UIDirection.uiDirectionHorizontal,
                                       link: 'https://${tweet.link}'),
                                 ],
-                                Container(
+                                // used to hide the icon if data is commet
+                                if(tweet.repliedTo.isEmpty)
+                                  Container(
                                   margin:
                                       const EdgeInsets.only(top: 10, right: 20),
                                   child: Row(
@@ -183,17 +185,16 @@ class TweetCard extends ConsumerWidget {
                                             .toString(),
                                         onTap: () {},
                                       ),
-                                      if(tweet.repliedTo.isEmpty)
-                                        TweetIconButton(
-                                          pathName: AssetsConstants.commentIcon,
-                                          text: (tweet.commentIds.length).toString(),
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              TweetReplyScreen.route(tweet),
-                                            );
-                                          },
-                                        ),
+                                      TweetIconButton(
+                                        pathName: AssetsConstants.commentIcon,
+                                        text: (tweet.commentIds.length).toString(),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            TweetReplyScreen.route(tweet),
+                                          );
+                                        },
+                                      ),
                                       TweetIconButton(
                                         pathName: AssetsConstants.retweetIcon,
                                         text: (tweet.reshareCount).toString(),
