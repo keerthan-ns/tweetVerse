@@ -87,7 +87,7 @@ class AuthController extends StateNotifier<bool> {
     res.fold(
       (l) => showSnackBar(context, l.message),
       (r) => {
-        Navigator.push(context, HomeView.route()),
+        Navigator.pushReplacement(context, HomeView.route()),
       },
     );
   }
