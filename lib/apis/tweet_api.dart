@@ -62,6 +62,7 @@ class TweetAPI implements ITweetAPI {
       collectionId: AppwriteConstants.tweetsCollection,
       queries: [
         Query.orderDesc('tweetedAt'),
+        Query.equal('repliedTo', ''),
       ],
     );
 

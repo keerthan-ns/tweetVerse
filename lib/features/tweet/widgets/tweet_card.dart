@@ -120,8 +120,7 @@ class TweetCard extends ConsumerWidget {
                                 ),
                                 // replied to
                                 if (tweet.repliedTo.isNotEmpty)
-                                  ref
-                                      .watch(
+                                  ref.watch(
                                           getTweetByIdProvider(tweet.repliedTo))
                                       .when(
                                         data: (repliedToTweet) {
