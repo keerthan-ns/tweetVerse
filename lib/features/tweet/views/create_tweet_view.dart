@@ -74,16 +74,19 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(currentUser.profilePic),
-                          radius: 30,
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(currentUser.profilePic),
+                            radius: 30,
+                          ),
                         ),
                         const SizedBox(height: 15),
                         Expanded(
                           child: TextField(
                             controller: tweetTextController,
                             style: const TextStyle(
-                              fontSize: 22,
+                              fontSize: 20,                          
                             ),
                             decoration: const InputDecoration(
                               hintText: "What's happening?",

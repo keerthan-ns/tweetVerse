@@ -14,3 +14,4 @@ class AppwriteConstants {
   static String imageUrl(String imageId) =>
       '$endPoint/storage/buckets/$imagesBucket/files/$imageId/view?project=$projectID&mode=admin';
 }
+

@@ -112,6 +112,12 @@ class TweetController extends StateNotifier<bool> {
         reshareCount: 0,
         tweetedAt: DateTime.now(),
       );
+      _notificationController.createNotification(
+        text: '${currentUser.name} retweeted your tweet!',
+        postId: tweet.id,
+        notificationType: NotificationType.retweet,
+        uid: tweet.uid,
+      );
       final res2 = await _tweetAPI.shareTweet(tweet);
       res2.fold((l) => showSnackBar(context, l.message),
           (r) => showSnackBar(context, 'Retweeted sucessfully!'));
@@ -125,14 +131,7 @@ class TweetController extends StateNotifier<bool> {
       // reshareCount: tweet.reshareCount + 1,
     );
     final res = await _tweetAPI.updateCommentCount(tweet);
-    res.fold((l) => null, (r) {
-      _notificationController.createNotification(
-        text: '${user.name} commented on your tweet!',
-        postId: tweet.id,
-        notificationType: NotificationType.like,
-        uid: tweet.uid,
-      );
-    });
+    res.fold((l) => null, (r) {});
   }
 
   void shareTweet({

@@ -33,7 +33,11 @@ class NotificationTile extends StatelessWidget {
                       color: Pallete.whiteColor,
                       height: 20,
                     )
-                  : null,
+                  : SvgPicture.asset(
+                      AssetsConstants.commentIcon,
+                      color: Pallete.whiteColor,
+                      height: 20,
+                    ),
       title: Text(notification.text),
     );
   }

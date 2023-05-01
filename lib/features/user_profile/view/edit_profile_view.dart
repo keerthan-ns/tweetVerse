@@ -146,7 +146,7 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
                     contentPadding: EdgeInsets.all(18),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 17),
                 TextField(
                   controller: bioController,
                   decoration: const InputDecoration(

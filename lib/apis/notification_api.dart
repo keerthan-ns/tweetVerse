@@ -54,6 +54,7 @@ class NotificationAPI implements INotificationAPI {
       databaseId: AppwriteConstants.databaseId,
       collectionId: AppwriteConstants.notificationsCollection,
       queries: [
+        Query.orderDesc('\$createdAt'),
         Query.equal('uid', uid),
       ],
     );
