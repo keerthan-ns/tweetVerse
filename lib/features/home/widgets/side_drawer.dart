@@ -31,7 +31,7 @@ class SideDrawer extends ConsumerWidget {
               title: const Text(
                 'My Profile',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                 ),
               ),
               onTap: () {
@@ -47,9 +47,9 @@ class SideDrawer extends ConsumerWidget {
                 size: 30,
               ),
               title: const Text(
-                'Twitter Blue',
+                'TweetVerse Blue',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                 ),
               ),
               onTap: () {
@@ -71,7 +71,7 @@ class SideDrawer extends ConsumerWidget {
               title: const Text(
                 'Log Out',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                 ),
               ),
               onTap: () {

@@ -12,7 +12,7 @@ class Tweet {
   final TweetType tweetType;
   final DateTime tweetedAt;
   final List<String> likes;
-  final List<String> commentIds;
+  final int commentIds;
   final String id;
   final int reshareCount;
   final String retweetedBy;
@@ -42,7 +42,7 @@ class Tweet {
     TweetType? tweetType,
     DateTime? tweetedAt,
     List<String>? likes,
-    List<String>? commentIds,
+    int? commentIds,
     String? id,
     int? reshareCount,
     String? retweetedBy,
@@ -94,7 +94,8 @@ class Tweet {
       tweetType: (map['tweetType'] as String).toTweetTypeEnum(),
       tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt']),
       likes: List<String>.from(map['likes']),
-      commentIds: List<String>.from(map['commentIds']),
+      // commentIds: List<String>.from(map['commentIds']),
+      commentIds: map['commentIds']?.toInt() ?? 0,
       id: map['\$id'] ?? '',
       reshareCount: map['reshareCount']?.toInt() ?? 0,
       retweetedBy: map['retweetedBy'] ?? '',
@@ -120,7 +121,8 @@ class Tweet {
       other.tweetType == tweetType &&
       other.tweetedAt == tweetedAt &&
       listEquals(other.likes, likes) &&
-      listEquals(other.commentIds, commentIds) &&
+      // listEquals(other.commentIds, commentIds) &&
+      other.commentIds == commentIds &&
       other.id == id &&
       other.reshareCount == reshareCount &&
       other.retweetedBy == retweetedBy &&

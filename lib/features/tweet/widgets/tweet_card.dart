@@ -91,8 +91,8 @@ class TweetCard extends ConsumerWidget {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
-                                          right: user.isTweetverseBlue ? 1 : 5,
-                                        ),
+                                        right: user.isTweetverseBlue ? 1 : 5,
+                                      ),
                                       child: Text(
                                         user.name,
                                         style: const TextStyle(
@@ -101,10 +101,12 @@ class TweetCard extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    if(user.isTweetverseBlue)
+                                    if (user.isTweetverseBlue)
                                       Padding(
-                                        padding: const EdgeInsets.only(right:5.0),
-                                        child: SvgPicture.asset(AssetsConstants.verifiedIcon),
+                                        padding:
+                                            const EdgeInsets.only(right: 5.0),
+                                        child: SvgPicture.asset(
+                                            AssetsConstants.verifiedIcon),
                                       ),
                                     Text(
                                       '@${user.name} • ${timeago.format(
@@ -120,7 +122,8 @@ class TweetCard extends ConsumerWidget {
                                 ),
                                 // replied to
                                 if (tweet.repliedTo.isNotEmpty)
-                                  ref.watch(
+                                  ref
+                                      .watch(
                                           getTweetByIdProvider(tweet.repliedTo))
                                       .when(
                                         data: (repliedToTweet) {
@@ -168,100 +171,100 @@ class TweetCard extends ConsumerWidget {
                                           UIDirection.uiDirectionHorizontal,
                                       link: 'https://${tweet.link}'),
                                 ],
-                                // used to hide the icon if data is commet
-                                if(tweet.repliedTo.isEmpty)
+                                // used to hide the icon if data is comment
+                                if (tweet.repliedTo.isEmpty)
                                   Container(
-                                  margin:
-                                      const EdgeInsets.only(top: 10, right: 20),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TweetIconButton(
-                                        pathName: AssetsConstants.viewsIcon,
-                                        text: (tweet.commentIds.length +
-                                                tweet.reshareCount +
-                                                tweet.likes.length)
-                                            .toString(),
-                                        onTap: () {},
-                                      ),
-                                      TweetIconButton(
-                                        pathName: AssetsConstants.commentIcon,
-                                        text: (tweet.commentIds.length).toString(),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            TweetReplyScreen.route(tweet),
-                                          );
-                                        },
-                                      ),
-                                      TweetIconButton(
-                                        pathName: AssetsConstants.retweetIcon,
-                                        text: (tweet.reshareCount).toString(),
-                                        onTap: () {
-                                          ref
-                                              .read(tweetControllerProvider
-                                                  .notifier)
-                                              .reshareTweet(
-                                                  tweet, currentUser, context);
-                                        },
-                                      ),
-                                      LikeButton(
-                                        size: 25,
-                                        onTap: (isLiked) async {
-                                          ref
-                                              .read(tweetControllerProvider
-                                                  .notifier)
-                                              .likeTweet(
-                                                tweet,
-                                                currentUser,
-                                              );
-                                          return !isLiked;
-                                        },
-                                        isLiked: tweet.likes
-                                            .contains(currentUser.uid),
-                                        likeBuilder: (isLiked) {
-                                          return isLiked
-                                              ? SvgPicture.asset(
-                                                  AssetsConstants
-                                                      .likeFilledIcon,
-                                                  color: Pallete.redColor,
-                                                )
-                                              : SvgPicture.asset(
-                                                  AssetsConstants
-                                                      .likeOutlinedIcon,
-                                                  color: Pallete.greyColor,
-                                                );
-                                        },
-                                        likeCount: tweet.likes.length,
-                                        countBuilder:
-                                            (likeCount, isLiked, text) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 2.0),
-                                            child: Text(
-                                              text,
-                                              style: TextStyle(
-                                                color: isLiked
-                                                    ? Pallete.redColor
-                                                    : Pallete.whiteColor,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.share_outlined,
-                                          size: 25,
-                                          // color: Pallete.greyColor,
+                                    margin: const EdgeInsets.only(
+                                        top: 10, right: 50),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TweetIconButton(
+                                          pathName: AssetsConstants.viewsIcon,
+                                          text: (tweet.commentIds +
+                                                  tweet.reshareCount +
+                                                  tweet.likes.length)
+                                              .toString(),
+                                          onTap: () {},
                                         ),
-                                      ),
-                                    ],
+                                        TweetIconButton(
+                                          pathName: AssetsConstants.commentIcon,
+                                          text: (tweet.commentIds).toString(),
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              TweetReplyScreen.route(tweet),
+                                            );
+                                          },
+                                        ),
+                                        TweetIconButton(
+                                          pathName: AssetsConstants.retweetIcon,
+                                          text: (tweet.reshareCount).toString(),
+                                          onTap: () {
+                                            ref
+                                                .read(tweetControllerProvider
+                                                    .notifier)
+                                                .reshareTweet(tweet,
+                                                    currentUser, context);
+                                          },
+                                        ),
+                                        LikeButton(
+                                          size: 21,
+                                          onTap: (isLiked) async {
+                                            ref
+                                                .read(tweetControllerProvider
+                                                    .notifier)
+                                                .likeTweet(
+                                                  tweet,
+                                                  currentUser,
+                                                );
+                                            return !isLiked;
+                                          },
+                                          isLiked: tweet.likes
+                                              .contains(currentUser.uid),
+                                          likeBuilder: (isLiked) {
+                                            return isLiked
+                                                ? SvgPicture.asset(
+                                                    AssetsConstants
+                                                        .likeFilledIcon,
+                                                    color: Pallete.redColor,
+                                                  )
+                                                : SvgPicture.asset(
+                                                    AssetsConstants
+                                                        .likeOutlinedIcon,
+                                                    color: Pallete.greyColor,
+                                                  );
+                                          },
+                                          likeCount: tweet.likes.length,
+                                          countBuilder:
+                                              (likeCount, isLiked, text) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 2.0),
+                                              child: Text(
+                                                text,
+                                                style: TextStyle(
+                                                  color: isLiked
+                                                      ? Pallete.redColor
+                                                      : Pallete.whiteColor,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        // IconButton(
+                                        //   onPressed: () {},
+                                        //   icon: const Icon(
+                                        //     Icons.share_outlined,
+                                        //     size: 25,
+                                        //     // color: Pallete.greyColor,
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
                                   ),
-                                ),
                                 const SizedBox(
                                   height: 1,
                                 ),

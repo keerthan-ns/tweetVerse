@@ -1,13 +1,15 @@
+// Fillout all these constants
+
 class AppwriteConstants {
-  static const String databaseId = '63ff43b37f21fc071917';
-  static const String projectID = '63ff423f8bd01a2858f2';
-  static const String endPoint = 'http://20.198.109.101/v1';
+  static const String databaseId = 'appwrite db ID';
+  static const String projectID = 'appwrite Project ID';
+  static const String endPoint = 'IP address/v1';
 
-  static const String usersCollection = '63ff468fac24bd067438';
-  static const String tweetsCollection = '63ff44acbee8a5541830';
-  static const String notificationsCollection = '63ff43d1b09e2dcd813c';
+  static const String usersCollection = '';
+  static const String tweetsCollection = '';
+  static const String notificationsCollection = '';
 
-  static const String imagesBucket = '63ff4783c3cae6367868';
+  static const String imagesBucket = '';
 
   static String imageUrl(String imageId) =>
       '$endPoint/storage/buckets/$imagesBucket/files/$imageId/view?project=$projectID&mode=admin';

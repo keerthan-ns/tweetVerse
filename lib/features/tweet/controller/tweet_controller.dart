@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tweetverse/apis/storage_api.dart';
 import 'package:tweetverse/apis/tweet_api.dart';
+import 'package:tweetverse/constants/appwrite_constants.dart';
 import 'package:tweetverse/core/enums/notification_type_enum.dart';
 import 'package:tweetverse/core/enums/tweet_type_enum.dart';
 import 'package:tweetverse/core/utils.dart';
@@ -101,7 +102,7 @@ class TweetController extends StateNotifier<bool> {
     tweet = tweet.copyWith(
       retweetedBy: currentUser.name,
       likes: [],
-      commentIds: [],
+      commentIds: 0,
       reshareCount: tweet.reshareCount + 1,
     );
     final res = await _tweetAPI.updateReshareCount(tweet);
@@ -114,6 +115,23 @@ class TweetController extends StateNotifier<bool> {
       final res2 = await _tweetAPI.shareTweet(tweet);
       res2.fold((l) => showSnackBar(context, l.message),
           (r) => showSnackBar(context, 'Retweeted sucessfully!'));
+    });
+  }
+
+  void commentTweet(Tweet tweet, UserModel user) async {
+    tweet = tweet.copyWith(
+      likes: [],
+      commentIds: tweet.commentIds + 1,
+      // reshareCount: tweet.reshareCount + 1,
+    );
+    final res = await _tweetAPI.updateCommentCount(tweet);
+    res.fold((l) => null, (r) {
+      _notificationController.createNotification(
+        text: '${user.name} commented on your tweet!',
+        postId: tweet.id,
+        notificationType: NotificationType.like,
+        uid: tweet.uid,
+      );
     });
   }
 
@@ -179,7 +197,7 @@ class TweetController extends StateNotifier<bool> {
       tweetType: TweetType.image,
       tweetedAt: DateTime.now(),
       likes: const [],
-      commentIds: const [],
+      commentIds: 0,
       id: '',
       reshareCount: 0,
       retweetedBy: '',
@@ -189,10 +207,10 @@ class TweetController extends StateNotifier<bool> {
     res.fold((l) => showSnackBar(context, l.message), (r) {
       if (repliedToUserId.isNotEmpty) {
         _notificationController.createNotification(
-            text: '${user.name} replied to your tweet',
-            postId: r.$id,
-            notificationType: NotificationType.reply,
-            uid: repliedToUserId,
+          text: '${user.name} replied to your tweet',
+          postId: r.$id,
+          notificationType: NotificationType.reply,
+          uid: repliedToUserId,
         );
       }
     });
@@ -219,21 +237,29 @@ class TweetController extends StateNotifier<bool> {
       tweetType: TweetType.text,
       tweetedAt: DateTime.now(),
       likes: const [],
-      commentIds: const [],
+      // commentIds: const [],
+      commentIds: 0,
       id: '',
       reshareCount: 0,
       retweetedBy: '',
       repliedTo: repliedTo,
     );
     final res = await _tweetAPI.shareTweet(tweet);
-    res.fold((l) => showSnackBar(context, l.message), (r) {
+    res.fold((l) => showSnackBar(context, l.message), (r) async {
       if (repliedToUserId.isNotEmpty) {
         _notificationController.createNotification(
-            text: '${user.name} replied to your tweet',
-            postId: r.$id,
-            notificationType: NotificationType.reply,
-            uid: repliedToUserId,
+          text: '${user.name} replied to your tweet',
+          postId: r.$id,
+          notificationType: NotificationType.reply,
+          uid: repliedToUserId,
         );
+        // final client = Client();
+        // final database = Databases(client);
+        // final res1 = await database.updateDocument(
+        //     databaseId: AppwriteConstants.databaseId,
+        //     collectionId: AppwriteConstants.tweetsCollection,
+        //     documentId: repliedTo,
+        //     data: updateData);
       }
     });
     state = false;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tweetverse/common/common.dart';
 import 'package:tweetverse/constants/appwrite_constants.dart';
+import 'package:tweetverse/features/auth/controller/auth_controller.dart';
 import 'package:tweetverse/features/tweet/controller/tweet_controller.dart';
 import 'package:tweetverse/features/tweet/widgets/tweet_card.dart';
 import 'package:tweetverse/models/tweet_model.dart';
@@ -56,7 +57,8 @@ class TweetReplyScreen extends ConsumerWidget {
                                   data.events[0].lastIndexOf('documents.');
                               final endPoint =
                                   data.events[0].lastIndexOf('.update');
-                              final tweetId = data.events[0].substring(startingPoint + 10, endPoint);
+                              final tweetId = data.events[0]
+                                  .substring(startingPoint + 10, endPoint);
 
                               var tweet = tweets
                                   .where((element) => element.id == tweetId)
@@ -105,9 +107,11 @@ class TweetReplyScreen extends ConsumerWidget {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: MediaQuery.of(context).viewInsets,//this is added to make the tweet reply field float on top of keyboard
+        padding: MediaQuery.of(context)
+            .viewInsets, //this is added to make the tweet reply field float on top of keyboard
         child: TextField(
           onSubmitted: (value) {
+            final currentUser = ref.watch(currentUserDetailsProvider).value;
             ref.read(tweetControllerProvider.notifier).shareTweet(
               images: [],
               text: value,
@@ -115,10 +119,13 @@ class TweetReplyScreen extends ConsumerWidget {
               repliedTo: tweet.id,
               repliedToUserId: tweet.uid,
             );
+            ref
+                .read(tweetControllerProvider.notifier)
+                .commentTweet(tweet, currentUser!);
           },
-          decoration:  InputDecoration(
+          decoration: InputDecoration(
             hintText: 'Tweet your reply',
-            contentPadding: const EdgeInsets.only(left: 20,right: 20),
+            contentPadding: const EdgeInsets.only(left: 20, right: 20),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: const BorderSide(
